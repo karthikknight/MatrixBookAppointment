@@ -15,7 +15,7 @@
   <h1>Appointment Info</h1>
   <hr>
 
-  <div class="form">
+  <div>
       <table>
         <tr>
           <td>Below is the appointment Information</td><br><br>

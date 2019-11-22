@@ -46,7 +46,7 @@ uri="http://www.springframework.org/tags/form" %>
     </form:form>
   </div>
     <div class="form2">
-    <form:form action="/appointment/getAppointmentInfo" command="u" method="post" modelAttribute="user">
+    <form:form action="/appointment/getAppointmentInfo" command="u" method="get" modelAttribute="user">
       <table>
         <tr>
           <td>Get your Appointment Information: </td><br>

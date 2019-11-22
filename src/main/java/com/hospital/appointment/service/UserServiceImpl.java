@@ -2,6 +2,7 @@ package com.hospital.appointment.service;
 
 import javax.transaction.Transactional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,7 @@ import com.hospital.appointment.model.User;
 @Service("userService")
 public class UserServiceImpl implements UserService{
 
+	@Autowired
 	private UserDAO userDAO;
 	public UserDAO getUserDAO() {
 		return userDAO;

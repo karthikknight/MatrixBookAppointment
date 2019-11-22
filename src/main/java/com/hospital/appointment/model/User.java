@@ -12,26 +12,21 @@ import javax.persistence.Table;
 public class User {
 
 	@Id
-	@Column(name="id")
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", dob=" + dob + ", apptDate="
-				+ apptDate + ", apptTime=" + apptTime + ", confirmationNum=" + confirmationNum + "]";
-	}
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	private String firstName;
-	private String lastName;
-	private String dob;
-	private String apptDate;
-	private String apptTime;
+	@Column(name="confirmationNum")
 	private String confirmationNum;
+	
+	@Column(name="firstName")
+	private String firstName;
+	
+	@Column(name="lastName")
+	private String lastName;
+	@Column(name="dob")
+	private String dob;
+	@Column(name="apptDate")
+	private String apptDate;
+	@Column(name="apptTime")
+	private String apptTime;
+	
 	public String getConfirmationNum() {
 		return confirmationNum;
 	}
@@ -68,6 +63,12 @@ public class User {
 	public void setApptTime(String apptTime) {
 		this.apptTime = apptTime;
 	}
+	@Override
+	public String toString() {
+		return "User [confirmationNum=" + confirmationNum + ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", dob=" + dob + ", apptDate=" + apptDate + ", apptTime=" + apptTime + "]";
+	}
+	
 	
 	
 }

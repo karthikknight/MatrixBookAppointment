@@ -5,6 +5,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +32,9 @@ public class BookingController {
 	
 	private UserService userService;
 	
-	public UserService getUserService() {
-		return userService;
-	}
+//	public UserService getUserService() {
+//		return userService;
+//	}
 
 	@Autowired()
 	public void setUserService(UserService userservice){
@@ -45,43 +46,33 @@ public class BookingController {
 		return new ModelAndView("bookingpage");
 	}
 	
-	@GetMapping("/getAppointmentInfo/{confNum}")
-	public ModelAndView getAppointment(@ModelAttribute("user") User u){
-		this.userService.getUserAppt(u.getConfirmationNum());
-        return new ModelAndView("appointmentInfo");
+	@GetMapping("/getAppointmentInfo")
+	public ModelAndView getAppointment(HttpServletRequest request, HttpServletResponse response){
+		User user = this.userService.getUserAppt(request.getParameter("confirmationNum"));
+		
+		System.out.println(user.toString());
+		ModelAndView view = new ModelAndView("appointmentInfo");
+		view.addObject("firstName", user.getFirstName());
+		view.addObject("lastName", user.getLastName());
+		view.addObject("dob", user.getDob());
+		view.addObject("apptDate", user.getApptDate());
+		view.addObject("apptTime", user.getApptTime());
+        return view;
     }
 	
 	@PostMapping("/saveappointment")
-	public String postBookingDetails(@ModelAttribute("user") User u) throws NoSuchAlgorithmException {
-//		ModelAndView modelView = new ModelAndView();
-//		Long randomConf = SecureRandom.getInstance("SHA1PRNG").nextLong();
-//		conf_num = randomConf.toString();
-//		modelView.setViewName("confirmation");
-		
+	public ModelAndView postBookingDetails(@ModelAttribute("user") User u) throws NoSuchAlgorithmException {
 		int length = 10;
 	    boolean useLetters = true;
 	    boolean useNumbers = true;
 	    String randomConf = RandomStringUtils.random(length, useLetters, useNumbers);
 	    
-//		User user = new User();
-//		String firstName=request.getParameter("firstName");
-//		String lastName=request.getParameter("lastName");
-//		String dob=request.getParameter("dob");
-//		String apptDate=request.getParameter("apptDate");
-//		String apptTime=request.getParameter("apptTime");
 		String confirmationNum=randomConf.toString();
-//		user.setFirstName(firstName);
-//		user.setLastName(lastName);
-//		user.setDob(dob);
-//		user.setApptDate(apptDate);
-//		user.setApptTime(apptTime);
-//		user.setConfirmationNum(confirmationNum);
-		
-//		u.addAttribute("confNum", confirmationNum);
-		u.setId(2);
 		u.setConfirmationNum(confirmationNum);
 		this.userService.addUserAppt(u);
-		return "confirmation";
+		ModelAndView view = new ModelAndView("confirmation");
+		view.addObject("confNum", confirmationNum);
+		return view;
 	}
 
 }
